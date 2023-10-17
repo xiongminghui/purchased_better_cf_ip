@@ -1,0 +1,40 @@
+import requests
+import json
+import os
+api_key = os.environ.get("API_KEY")
+print("+++++")
+print(api_key)
+exit(0)
+
+def get_ip_region(ip):
+    res = requests.get(f"http://ip-api.com/json/{ip}?lang=zh-CN")
+    data = res.json()
+    region = "美国"
+    if data["country"] != "":
+        region = data["country"]
+    return str(region)
+def add_region_to_ips(data):
+    info = data["info"]
+    for key in info:
+        for item in info[key]:
+            ip = item["ip"]
+            region = get_ip_region(ip)
+            item["region"] = region
+    return data
+
+
+headers = {'Content-Type': 'application/json'}
+dataJson = {"key": api_key, "type": "v4"}
+response = requests.post('https://api.hostmonit.com/get_optimization_ip', json=dataJson, headers=headers)
+if response.status_code != 200:
+    print("获取失败！")
+    exit(0)
+data = response.json()
+if data["code"] != 200:
+    exit()
+result = add_region_to_ips(data)
+
+output = json.dumps(result, indent=4)
+print(output)
+
+
