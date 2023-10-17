@@ -8,6 +8,7 @@ print(api_key)
 def get_ip_region(ip):
     res = requests.get(f"http://ip-api.com/json/{ip}?lang=zh-CN")
     data = res.json()
+    print(data)
     # region = "美国"
     # if data["country"] != "":
     #     region = data["country"]
