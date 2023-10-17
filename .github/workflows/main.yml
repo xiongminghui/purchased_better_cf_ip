@@ -1,0 +1,45 @@
+name: Add IP Region
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+
+    - name: Run Python script
+      env:
+        API_KEY: ${{ secrets.API_KEY }}
+      run: python purchased_cf.py > output.json
+
+    - name: Save output to file
+      run: |
+        mkdir -p ${{GITHUB_WORKSPACE}}/results
+        mv output.json ${{GITHUB_WORKSPACE}}/results/output.json
+
+    - name: Commit and push changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "Update IP region data"
+        branch: ${{ github.ref }}
+
+    - name: Push changes
+      uses: ad-m/github-push-action@v0.6.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
