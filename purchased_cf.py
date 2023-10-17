@@ -4,7 +4,6 @@ import os
 api_key = os.environ.get("API_KEY")
 print("+++++")
 print(api_key)
-exit(0)
 
 def get_ip_region(ip):
     res = requests.get(f"http://ip-api.com/json/{ip}?lang=zh-CN")
