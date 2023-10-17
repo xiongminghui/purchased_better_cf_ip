@@ -15,8 +15,8 @@ def get_ip_region(ip):
         region = data["country"]
     return str(region)
 
-get_ip_region("192.169.113.194")
-exit(0)
+# get_ip_region("192.169.113.194")
+# exit(0)
 def add_region_to_ips(data):
     info = data["info"]
     for key in info:
@@ -41,6 +41,6 @@ result = add_region_to_ips(data)
 output = json.dumps(result, indent=4)
 # print(output)
 with open("better_ip.json", "w") as file:
-    file.write(vmess)
+    file.write(output)
 
 
