@@ -26,20 +26,15 @@ jobs:
     - name: Run Python script
       env:
         API_KEY: ${{ secrets.API_KEY }}
-      run: python purchased_cf.py > output.json
-
-    - name: Save output to file
-      run: |
-        mkdir -p ${{GITHUB_WORKSPACE}}/results
-        mv output.json ${{GITHUB_WORKSPACE}}/results/output.json
+      run: python purchased_cf.py
 
     - name: Commit and push changes
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: "Update IP region data"
-        branch: ${{ github.ref }}
-
-    - name: Push changes
-      uses: ad-m/github-push-action@v0.6.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+      #uses: stefanzweifel/git-auto-commit-action@v4
+      #with:
+      #  commit_message: generate auto
+      run: |
+        git config --global user.email "action@lxxself.com"
+        git config --global user.name "ActionBot"
+        git add .
+        git commit -m "Update country files"
+        git push
