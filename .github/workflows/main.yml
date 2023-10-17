@@ -28,7 +28,12 @@ jobs:
     - name: Run Python script
       env:
         API_KEY: ${{ secrets.API_KEY }}
-      run: python purchased_cf.py
+      run: python purchased_cf.py > better_ip.json
+    - name: Upload result
+      uses: actions/upload-artifact@v2
+      with:
+        name: Output
+        path: better_ip.json
 
     - name: Commit and push changes
       #uses: stefanzweifel/git-auto-commit-action@v4
