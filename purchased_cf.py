@@ -35,6 +35,8 @@ if data["code"] != 200:
 result = add_region_to_ips(data)
 
 output = json.dumps(result, indent=4)
-print(output)
+# print(output)
+with open("better_ip.json", "w") as file:
+    file.write(vmess)
 
 
