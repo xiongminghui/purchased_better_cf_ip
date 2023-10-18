@@ -24,13 +24,13 @@ def add_region_to_ips(data):
     return data
 
 
-# headers = {'Content-Type': 'application/json'}
-# dataJson = {"key": api_key, "type": "v4"}
-# response = requests.post('https://api.hostmonit.com/get_optimization_ip', json=dataJson, headers=headers)
-# if response.status_code != 200:
-#     print("获取失败！")
-#     exit(0)
-response = requests.get('https://raw.githubusercontent.com/xiongminghui/cloudflare-better-ip/main/html/purchased_cf_ip.json')
+headers = {'Content-Type': 'application/json'}
+dataJson = {"key": api_key, "type": "v4"}
+response = requests.post('https://api.hostmonit.com/get_optimization_ip', json=dataJson, headers=headers)
+if response.status_code != 200:
+    print("获取失败！")
+    exit(0)
+# response = requests.get('https://raw.githubusercontent.com/xiongminghui/cloudflare-better-ip/main/html/purchased_cf_ip.json')
 data = response.json()
 if data["code"] != 200:
     exit()
